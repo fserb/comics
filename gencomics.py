@@ -64,6 +64,10 @@ comics = [
      'http://pbfcomics.com',
      '<a href="\?cid=(.*?)#.*?"',
      'http://pbfcomics.com/archive/%s'),
+    ('Saturday Morning Breakfast Cereal',
+     'http://www.smbc-comics.com/',
+     '<img alt="comic" src="/(.*?)">',
+     'http://www.smbc-comics.com/%s'),
     ]
 
 def getNewComics():
@@ -83,7 +87,7 @@ def getNewComics():
             print ans
             ret.append(ans)
         except:
-            print "Invalid", title, url
+            #print "Invalid", title, url
    	    ret.append(())
 
     for c in comics:
@@ -106,7 +110,6 @@ def main():
     for n in new:
         if not n[1] in links:
             old.insert(0,n)
-            #print n
 
     items = []
     for title, link, date in old[:50]:
