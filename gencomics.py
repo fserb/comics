@@ -1,10 +1,15 @@
-#!/usr/bin/python2.4
-# Generate comics.xml RSS feed
+#!/usr/bin/env python2.4
+"""
+Generates comics.xml RSS feeds
+
+TODO:
+- debug mode
+- send regular "debug" updates
+"""
 
 import re, urllib, thread, time, socket, datetime
 import feedparser
 import PyRSS2Gen as RSS2
-
 
 comics = [
     ( "Dilbert",
@@ -47,26 +52,17 @@ comics = [
       'http://www.wulffmorgenthaler.com/',
       'src="(striphandler.*?)"',
       'http://www.wulffmorgenthaler.com/%s' ),
-    ( 'Cubicle Gangsters',
-      'http://www.cubiclegangsters.com/xml/comics.rss.xml',
-      '<guid>(http://www.cubiclegangsters.com/comics/.*?)</guid>',
-      '%s' ),
-    ( 'A Softer World',
-      'http://www.asofterworld.com/',
-      '<IMG SRC="(http://www.asofterworld.com/.*?)"',
-      '%s' ),
-    ( 'Butter Nut Squash',
-      'http://www.butternutsquash.net/assets/pages/bns-current.html',
-      '<img src="../(library.*?)"',
-      'http://www.butternutsquash.net/assets/%s' ),
     ( 'User Friendly',
       'http://ars.userfriendly.org/cartoons/',
       'src="(http://www.userfriendly.org/cartoons/archives/.*?)"',
       '%s' ),
+    ( 'Indexed',
+      'http://indexed.blogspot.com/',
+      '<img style.*? src="(.*?)" .*?>',
+      '%s'),
     ]
 
 def getNewComics():
-
     ret = []
 
     def getSingle(title, url, regexp, link):
@@ -78,25 +74,23 @@ def getNewComics():
                     d = ""
                     continue
                 break
-        
             x = re.findall(regexp, d)[0]
-        
             ans = (title, link % x, datetime.datetime.now())
-            #print ans
+            print ans
             ret.append(ans)
         except:
-   	    ret.append(()) 
+            print "Invalid", title, url
+   	    ret.append(())
+
     for c in comics:
         thread.start_new_thread(getSingle, c)
 
     while len(ret)<len(comics):
         time.sleep(1)
-            
     return [ x for x in ret if x ]
 
 def loadEntries():
     return [ (e.title, e.link, e.date) for e in feedparser.parse("comics.xml").entries ]
-
 
 def main():
     socket.setdefaulttimeout(5)
@@ -104,7 +98,7 @@ def main():
     old = loadEntries()
 
     links = [ x[1] for x in old ]
-    
+
     for n in new:
         if not n[1] in links:
             old.insert(0,n)
@@ -117,17 +111,16 @@ def main():
                                     description = '<img src="%s">' % link,
                                     guid = RSS2.Guid(link),
                                     pubDate = date) )
-        
+
     rss = RSS2.RSS2(
         title = "Comics",
         link = "http://fserb.com.br/comics.xml",
         description = "Comics feeds for the masses",
         lastBuildDate = datetime.datetime.now(),
-
         items = items)
-    
+
     rss.write_xml(open("comics.xml", "w"))
-    
+
 
 if __name__ == "__main__":
     main()
