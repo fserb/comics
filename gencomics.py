@@ -1,5 +1,5 @@
 #!/usr/bin/python2.4
-# Generate comics.xml RSS
+# Generate comics.xml RSS feed
 
 import re, urllib, thread, time, socket, datetime
 import feedparser
