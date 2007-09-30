@@ -60,6 +60,10 @@ comics = [
       'http://indexed.blogspot.com/',
       '<img style.*? src="(.*?)" .*?>',
       '%s'),
+    ('The Perry Bible Fellowship',
+     'http://pbfcomics.com',
+     '<a href="\?cid=(.*?)#.*?"',
+     'http://pbfcomics.com/archive/%s'),
     ]
 
 def getNewComics():
