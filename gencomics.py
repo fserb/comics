@@ -68,6 +68,10 @@ comics = [
      'http://www.smbc-comics.com/',
      '<img alt="comic" src="/(.*?)">',
      'http://www.smbc-comics.com/%s'),
+    ('Cyanide and Happiness',
+     'http://www.explosm.net/comics',
+     '<img alt=".*?" src="(http://www.explosm.net/.*?)">',
+     '%s'),
     ]
 
 def getNewComics():
@@ -84,7 +88,7 @@ def getNewComics():
                 break
             x = re.findall(regexp, d)[0]
             ans = (title, link % x, datetime.datetime.now())
-            print ans
+            #print ans
             ret.append(ans)
         except:
             #print "Invalid", title, url
