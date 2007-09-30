@@ -1,5 +1,5 @@
 #!/usr/bin/python2.4
-# Gen comics.xml
+# Generate comics.xml
 
 import re, urllib, thread, time, socket, datetime
 import feedparser
