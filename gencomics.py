@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python2.4
 
 import re, urllib, thread, time, socket, datetime
 import feedparser
