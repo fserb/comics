@@ -64,14 +64,6 @@ comics = [
      'http://pbfcomics.com',
      '<a href="\?cid=(.*?)#.*?"',
      'http://pbfcomics.com/archive/%s'),
-    ('Saturday Morning Breakfast Cereal',
-     'http://www.smbc-comics.com/',
-     '<img alt="comic" src="/(.*?)">',
-     'http://www.smbc-comics.com/%s'),
-    ('Cyanide and Happiness',
-     'http://www.explosm.net/comics',
-     '<img alt=".*?" src="(http://www.explosm.net/.*?)">',
-     '%s'),
     ]
 
 def getNewComics():
