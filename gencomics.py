@@ -11,6 +11,8 @@ import re, urllib, thread, time, socket, datetime
 import feedparser
 import PyRSS2Gen as RSS2
 
+baselink = 'http://fserb.com.br/comics.xml'
+
 comics = [
     ( "Dilbert",
       "http://www.dilbert.com",
@@ -72,6 +74,7 @@ comics = [
 
 def getNewComics():
     ret = []
+    errors = []
 
     def getSingle(title, url, regexp, link):
         try:
@@ -84,28 +87,35 @@ def getNewComics():
                 break
             x = re.findall(regexp, d)[0]
             ans = (title, link % x, datetime.datetime.now())
-            #print ans
             ret.append(ans)
         except:
-            #print "Invalid", title, url
-   	    ret.append(())
+            errors.append(title)
+            ret.append(())
 
     for c in comics:
         thread.start_new_thread(getSingle, c)
 
     while len(ret)<len(comics):
         time.sleep(1)
-    return [ x for x in ret if x ]
+    return ([ x for x in ret if x ], errors)
 
 def loadEntries():
     return [ (e.title, e.link, e.date) for e in feedparser.parse("comics.xml").entries ]
 
 def main():
     socket.setdefaulttimeout(5)
-    new = getNewComics()
+    new, errors = getNewComics()
     old = loadEntries()
 
     links = [ x[1] for x in old ]
+
+    if errors:
+        err = ['Error in comics:<ul>']
+        err.extend('<li>%s' % x for x in errors)
+        err.append('</ul>')
+        err = ''.join(err)
+        if not err in links:
+            old.insert(0, ('Comics status', err, datetime.datetime.now()))
 
     for n in new:
         if not n[1] in links:
@@ -113,11 +123,19 @@ def main():
 
     items = []
     for title, link, date in old[:50]:
-        items.append( RSS2.RSSItem( title = title,
-                                    link = link,
-                                    description = '<img src="%s">' % link,
-                                    guid = RSS2.Guid(link),
-                                    pubDate = date) )
+        if title == "Comics status":
+            items.append( RSS2.RSSItem( title = title,
+                                        link = link,
+                                        description = link + errmsg,
+                                        guid = RSS2.Guid(link),
+                                        pubDate = date) )
+
+        else:
+            items.append( RSS2.RSSItem( title = title,
+                                        link = link,
+                                        description = '<img src="%s">' % link,
+                                        guid = RSS2.Guid(link),
+                                        pubDate = date) )
 
     rss = RSS2.RSS2(
         title = "Comics",
@@ -128,6 +146,11 @@ def main():
 
     rss.write_xml(open("comics.xml", "w"))
 
+errmsg = """
+<br>
+Your friendly comics administrator will take care of that
+as soon as possible. :)
+"""
 
 if __name__ == "__main__":
     main()
