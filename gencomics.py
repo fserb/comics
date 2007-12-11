@@ -63,7 +63,7 @@ comics = [
     ('The Perry Bible Fellowship',
      'http://pbfcomics.com',
      '<a href="\?cid=(.*?)"',
-     'http://pbfcomics.com/archive/%s'),
+     'http://pbfcomics.com/archive_b/%s'),
     ('The Joy of Tech',
      'http://www.joyoftech.com/joyoftech/index.html',
      '<img src="(joyimages/.*?)" alt="The Joy of Tech comic"',
