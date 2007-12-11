@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.4
+#!/usr/bin/env python2.5
 """
 Generates comics.xml RSS feeds
 
@@ -7,11 +7,13 @@ TODO:
 - send regular "debug" updates
 """
 
-import re, urllib, thread, time, socket, datetime
+import re, urllib, thread, time, socket, datetime, sys
 import feedparser
 import PyRSS2Gen as RSS2
 
-baselink = 'http://fserb.com.br/comics.xml'
+Baselink = 'http://fserb.com.br/comics.xml'
+
+debug = False
 
 comics = [
     ( "Dilbert",
@@ -73,6 +75,7 @@ comics = [
     ]
 
 def getNewComics():
+    global debug
     ret = []
     errors = []
 
@@ -87,8 +90,12 @@ def getNewComics():
                 break
             x = re.findall(regexp, d)[0]
             ans = (title, link % x, datetime.datetime.now())
+            if debug:
+                print ans
             ret.append(ans)
         except:
+            if debug:
+                print "error:", title
             errors.append(title)
             ret.append(())
 
@@ -103,6 +110,11 @@ def loadEntries():
     return [ (e.title, e.link, e.date) for e in feedparser.parse("comics.xml").entries ]
 
 def main():
+    global debug
+    if len(sys.argv) > 1:
+        debug = 'd' in sys.argv[1]
+        remove_errors = 'e' in sys.argv[1]
+
     socket.setdefaulttimeout(5)
     new, errors = getNewComics()
     old = loadEntries()
@@ -121,15 +133,30 @@ def main():
         if not n[1] in links:
             old.insert(0,n)
 
+    if debug:
+        print
+        print "RSS Output:"
+        print
+
     items = []
     for title, link, date in old[:50]:
+        if debug:
+            if type(date) == unicode:
+                d = datetime.datetime.strptime(date,
+                                               '%a, %d %b %Y %H:%M:%S GMT')
+            else:
+                d = date
+            print '%04d-%02d-%02d - %s' % (d.year,
+                                           d.month,
+                                           d.day,
+                                           title)
         if title == "Comics status":
-            items.append( RSS2.RSSItem( title = title,
-                                        link = link,
-                                        description = link + errmsg,
-                                        guid = RSS2.Guid(link),
-                                        pubDate = date) )
-
+            if not remove_errors:
+                items.append( RSS2.RSSItem( title = title,
+                                            link = link,
+                                            description = link + errmsg,
+                                            guid = RSS2.Guid(link),
+                                            pubDate = date) )
         else:
             items.append( RSS2.RSSItem( title = title,
                                         link = link,
