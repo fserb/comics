@@ -22,7 +22,7 @@ comics = [
       "http://www.comics.com/%s" ),
     ( "Malvados",
       "http://www.malvados.com.br/",
-      '<frame name="mainFrame" src="index(.*?)\.html">',
+      '<frame name="mainFrame" src="http://www.malvados.com.br/index(.*?)\.html">',
       "http://www.malvados.com.br/tirinha%s.gif" ),
     ( "BugBash",
       "http://www.bugbash.net/",
@@ -62,8 +62,12 @@ comics = [
       '%s'),
     ('The Perry Bible Fellowship',
      'http://pbfcomics.com',
-     '<a href="\?cid=(.*?)#.*?"',
+     '<a href="\?cid=(.*?)"',
      'http://pbfcomics.com/archive/%s'),
+    ('The Joy of Tech',
+     'http://www.joyoftech.com/joyoftech/index.html',
+     '<img src="(joyimages/.*?)" alt="The Joy of Tech comic"',
+     'http://www.joyoftech.com/joyoftech/%s'),
     ]
 
 def getNewComics():
@@ -80,10 +84,10 @@ def getNewComics():
                 break
             x = re.findall(regexp, d)[0]
             ans = (title, link % x, datetime.datetime.now())
-            #print ans
+            print ans
             ret.append(ans)
         except:
-            #print "Invalid", title, url
+            print "Invalid", title, url
    	    ret.append(())
 
     for c in comics:
