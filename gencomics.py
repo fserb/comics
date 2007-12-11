@@ -84,10 +84,10 @@ def getNewComics():
                 break
             x = re.findall(regexp, d)[0]
             ans = (title, link % x, datetime.datetime.now())
-            print ans
+            #print ans
             ret.append(ans)
         except:
-            print "Invalid", title, url
+            #print "Invalid", title, url
    	    ret.append(())
 
     for c in comics:
