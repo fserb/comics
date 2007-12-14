@@ -114,6 +114,9 @@ def main():
     if len(sys.argv) > 1:
         debug = 'd' in sys.argv[1]
         remove_errors = 'e' in sys.argv[1]
+    else:
+        debug = False
+        remove_errors = False
 
     socket.setdefaulttimeout(5)
     new, errors = getNewComics()
