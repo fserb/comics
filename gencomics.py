@@ -11,6 +11,8 @@ import re, urllib, thread, time, socket, datetime, sys
 import feedparser
 import PyRSS2Gen as RSS2
 
+import fspcomics
+
 Baselink = 'http://fserb.com.br/comics.xml'
 
 debug = False
@@ -74,6 +76,7 @@ comics = [
      'http://www.joyoftech.com/joyoftech/%s'),
     ]
 
+
 def getNewComics():
     global debug
     ret = []
@@ -91,7 +94,7 @@ def getNewComics():
             x = re.findall(regexp, d)[0]
             ans = (title, link % x, datetime.datetime.now())
             if debug:
-                print ans
+                print (ans[0], ans[1])
             ret.append(ans)
         except:
             if debug:
@@ -104,10 +107,21 @@ def getNewComics():
 
     while len(ret)<len(comics):
         time.sleep(1)
+
     return ([ x for x in ret if x ], errors)
 
+
+def getFSPComics():
+    for name, url in fspcomics.fspcomics():
+        if debug:
+            print "UOL:", (name, url)
+        yield (name, url, datetime.datetime.now())
+
+
 def loadEntries():
-    return [ (e.title, e.link, e.date) for e in feedparser.parse("comics.xml").entries ]
+    return [ (e.title.encode('utf-8'), e.link, e.date)
+              for e in feedparser.parse("comics.xml").entries ]
+
 
 def main():
     global debug
@@ -119,8 +133,9 @@ def main():
         remove_errors = False
 
     socket.setdefaulttimeout(5)
-    new, errors = getNewComics()
     old = loadEntries()
+    new, errors = getNewComics()
+    new.extend(getFSPComics())
 
     links = [ x[1] for x in old ]
 
@@ -174,7 +189,7 @@ def main():
         lastBuildDate = datetime.datetime.now(),
         items = items)
 
-    rss.write_xml(open("comics.xml", "w"))
+    rss.write_xml(open("comics.xml", "w"), encoding='utf-8')
 
 errmsg = """
 <br>
