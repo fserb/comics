@@ -11,7 +11,7 @@ import re, urllib, thread, time, socket, datetime, sys
 import feedparser
 import PyRSS2Gen as RSS2
 
-import fspcomics
+#import fspcomics
 
 Baselink = 'http://fserb.com.br/comics.xml'
 
@@ -28,7 +28,7 @@ comics = [
       "http://www.comics.com/%s" ),
     ( "Malvados",
       "http://www.malvados.com.br/",
-      '<frame name="mainFrame" src="http://www.malvados.com.br/index(.*?)\.html">',
+      '<frame name="mainFrame" src="index(.*?)\.html">',
       "http://www.malvados.com.br/tirinha%s.gif" ),
     ( "BugBash",
       "http://www.bugbash.net/",
@@ -50,10 +50,6 @@ comics = [
       "http://www.penny-arcade.com/comic",
       'src="/(images/200.*?)"',
        "http://www.penny-arcade.com/%s" ),
-    ( "PC Weenies",
-      "http://www.pcweenies.org/",
-      'SRC="/(images/toons/pc.*?)"',
-      "http://www.pcweenies.org/%s" ),
     ( 'Wulffmorgenthaler',
       'http://www.wulffmorgenthaler.com/',
       'src="(striphandler.*?)"',
@@ -74,6 +70,10 @@ comics = [
      'http://www.joyoftech.com/joyoftech/index.html',
      '<img src="(joyimages/.*?)" alt="The Joy of Tech comic"',
      'http://www.joyoftech.com/joyoftech/%s'),
+    ('IdiotBox',
+     'http://www.mattbors.com/newstrip.html',
+     '<img src="strips/(.*?)" ',
+     'http://www.mattbors.com/strips/%s'),
     ]
 
 
@@ -135,7 +135,7 @@ def main():
     socket.setdefaulttimeout(5)
     old = loadEntries()
     new, errors = getNewComics()
-    new.extend(getFSPComics())
+    #new.extend(getFSPComics())
 
     links = [ x[1] for x in old ]
 
