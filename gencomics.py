@@ -74,6 +74,10 @@ comics = [
      'http://www.mattbors.com/newstrip.html',
      '<img src="strips/(.*?)" ',
      'http://www.mattbors.com/strips/%s'),
+    ('Allan Sieber',
+     'http://talktohimselfshow.zip.net/',
+     '<IMG.*?src="(http://talktohimselfshow.zip.net/images/.*?)".*>',
+     '%s'),
     ]
 
 
