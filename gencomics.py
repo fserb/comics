@@ -74,6 +74,10 @@ comics = [
      'http://talktohimselfshow.zip.net/',
      '<IMG.*?src="(http://talktohimselfshow.zip.net/images/.*?)".*>',
      'cache:%s'),
+    ('Pathetic Geek Stories',
+     'http://www.patheticgeekstories.com/',
+     '<img src="(archives/recentstrips/.*?)" ',
+     'http://www.patheticgeekstories.com/%s'),
     ]
 
 
