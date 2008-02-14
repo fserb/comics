@@ -78,6 +78,10 @@ comics = [
      'http://www.patheticgeekstories.com/',
      '<img src="(archives/recentstrips/.*?)" ',
      'http://www.patheticgeekstories.com/%s'),
+    ('Sinfest',
+     'http://www.sinfest.net/',
+     '<p align="center"><img src="(http://sinfest.net/comikaze/comics/.*?)" ',
+     '%s'),
     ]
 
 
