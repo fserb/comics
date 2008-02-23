@@ -5,6 +5,7 @@ Generates comics.xml RSS feeds
 TODO:
 - debug mode
 - send regular "debug" updates
+
 """
 
 import re, urllib, thread, time, socket, datetime, sys, sha, os
@@ -82,6 +83,14 @@ comics = [
      'http://www.sinfest.net/',
      '<p align="center"><img src="(http://sinfest.net/comikaze/comics/.*?)" ',
      '%s'),
+    ('Buttersafe',
+     'http://buttersafe.com',
+     "<img src='(http://buttersafe.com/comics/.*)'>",
+     '%s'),
+    ('Subnormality',
+     'http://www.viruscomix.com/subnormality.html',
+     '<img src="(.*?)" alt',
+     'http://www.viruscomix.com/%s'),
     ]
 
 
