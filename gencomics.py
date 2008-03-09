@@ -5,7 +5,8 @@ Generates comics.xml RSS feeds
 TODO:
 - debug mode
 - send regular "debug" updates
-
+http://www.savagechickens.com/blog/index.html
+http://seemikedraw.wordpress.com/
 """
 
 import re, urllib, thread, time, socket, datetime, sys, sha, os
@@ -95,7 +96,7 @@ comics = [
 
 
 def getURL(url):
-  for _ in range(5):
+  for _ in range(2):
     try:
       d = urllib.urlopen(url).read()
     except:
@@ -118,7 +119,7 @@ def cache(url):
     return cache_url
   if debug:
     print "retrieve"
-  for _ in range(5):
+  for _ in range(3):
     try:
       urllib.urlretrieve(url, 'cache/'+cache_name)
     except:
