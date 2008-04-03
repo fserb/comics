@@ -7,6 +7,7 @@ TODO:
 - send regular "debug" updates
 http://www.savagechickens.com/blog/index.html
 http://seemikedraw.wordpress.com/
+http://cectic.com/
 """
 
 import re, urllib, thread, time, socket, datetime, sys, sha, os
@@ -72,10 +73,6 @@ comics = [
      'http://www.mattbors.com/newstrip.html',
      '<img src="strips/(.*?)" ',
      'http://www.mattbors.com/strips/%s'),
-    ('Allan Sieber',
-     'http://talktohimselfshow.zip.net/',
-     '<IMG.*?src="(http://talktohimselfshow.zip.net/images/.*?)".*>',
-     'cache:%s'),
     ('Pathetic Geek Stories',
      'http://www.patheticgeekstories.com/',
      '<img src="(archives/recentstrips/.*?)" ',
@@ -105,29 +102,6 @@ def getURL(url):
     break
   return d
 
-
-def cache(url):
-  global debug
-  url_name, ext = os.path.splitext(url)
-  cache_name = sha.new(url_name).hexdigest() + ext
-  cache_url = "http://fserb.com.br/comicscache/" + cache_name
-  if debug:
-    print "Caching: %s (%s)" % (url, cache_name),
-  if os.path.isfile('cache/'+cache_name):
-    if debug:
-      print "hit"
-    return cache_url
-  if debug:
-    print "retrieve"
-  for _ in range(3):
-    try:
-      urllib.urlretrieve(url, 'cache/'+cache_name)
-    except:
-      continue
-    break
-  return cache_url
-
-
 def getNewComics():
   global debug
   ret = []
@@ -138,8 +112,6 @@ def getNewComics():
     try:
       page = getURL(url)
       link = linkp % re.findall(regexp, page)[0]
-      if link.startswith('cache:'):
-          link = cache(link[6:])
       ans = (title, link, datetime.datetime.now())
       if debug:
         print (ans[0], ans[1])
@@ -153,8 +125,12 @@ def getNewComics():
   for c in comics:
     thread.start_new_thread(getSingle, c)
 
+  timelapse = 0
   while len(ret)<len(comics):
     time.sleep(1)
+    timelapse += 1
+    if timelapse >= 60:
+      break
 
 
   return ([ x for x in ret if x ], errors)
