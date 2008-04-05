@@ -18,8 +18,6 @@ import PyRSS2Gen as RSS2
 
 Baselink = 'http://fserb.com.br/comics.xml'
 
-debug = False
-
 comics = [
     ( "Dilbert",
       "http://www.dilbert.com",
@@ -103,9 +101,7 @@ def getURL(url):
   return d
 
 def getNewComics():
-  global debug
   ret = []
-  errors = []
 
   def getSingle(title, url, regexp, linkp):
     ans = ()
@@ -113,12 +109,9 @@ def getNewComics():
       page = getURL(url)
       link = linkp % re.findall(regexp, page)[0]
       ans = (title, link, datetime.datetime.now())
-      if debug:
-        print (ans[0], ans[1])
+      print '%s: %s' % (ans[0], ans[1])
     except:
-      if debug:
-        print "error:", title
-      errors.append(title)
+      print "%s: error" % title
     finally:
       ret.append(ans)
 
@@ -133,14 +126,7 @@ def getNewComics():
       break
 
 
-  return ([ x for x in ret if x ], errors)
-
-
-def getFSPComics():
-  for name, url in fspcomics.fspcomics():
-    if debug:
-      print "UOL:", (name, url)
-    yield (name, url, datetime.datetime.now())
+  return [ x for x in ret if x ]
 
 
 def loadEntries():
@@ -149,63 +135,23 @@ def loadEntries():
 
 
 def main():
-  global debug
-  if len(sys.argv) > 1:
-    debug = 'd' in sys.argv[1]
-    remove_errors = 'e' in sys.argv[1]
-  else:
-    debug = False
-    remove_errors = False
-
   socket.setdefaulttimeout(5)
   old = loadEntries()
-  new, errors = getNewComics()
-  #new.extend(getFSPComics())
+  new = getNewComics()
 
   links = [ x[1] for x in old ]
-
-  if errors:
-    err = ['Error in comics:<ul>']
-    err.extend('<li>%s' % x for x in errors)
-    err.append('</ul>')
-    err = ''.join(err)
-    if not err in links:
-      old.insert(0, ('Comics status', err, datetime.datetime.now()))
 
   for n in new:
     if not n[1] in links:
       old.insert(0,n)
 
-  if debug:
-    print
-    print "RSS Output:"
-    print
-
   items = []
   for title, link, date in old[:50]:
-    if debug:
-      if type(date) == unicode:
-        d = datetime.datetime.strptime(date,
-                         '%a, %d %b %Y %H:%M:%S GMT')
-      else:
-        d = date
-      print '%04d-%02d-%02d - %s' % (d.year,
-                       d.month,
-                       d.day,
-                       title)
-    if title == "Comics status":
-      if not remove_errors:
-        items.append( RSS2.RSSItem( title = title,
-                      link = link,
-                      description = link + errmsg,
-                      guid = RSS2.Guid(link),
-                      pubDate = date) )
-    else:
-      items.append( RSS2.RSSItem( title = title,
-                    link = link,
-                    description = '<img src="%s">' % link,
-                    guid = RSS2.Guid(link),
-                    pubDate = date) )
+    items.append( RSS2.RSSItem( title = title,
+                                link = link,
+                                description = '<img src="%s">' % link,
+                                guid = RSS2.Guid(link),
+                                pubDate = date) )
 
   rss = RSS2.RSS2(
     title = "Comics",
@@ -216,11 +162,11 @@ def main():
 
   rss.write_xml(open("comics.xml", "w"), encoding='utf-8')
 
-errmsg = """
-<br>
-Your friendly comics administrator will take care of that
-as soon as possible. :)
-"""
 
 if __name__ == "__main__":
-  main()
+  import traprss
+  traprss.trytrap()
+  try:
+    main()
+  finally:
+    traprss.untrap("comics_debug.xml")
