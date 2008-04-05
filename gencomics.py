@@ -132,6 +132,18 @@ def getNewComics():
   return [ x for x in ret if x ]
 
 
+def getFSPComics():
+  ret = []
+  for e in feedparser.parse("http://leandrosiqueira.com/quadrinhos/rss/").entries:
+    try:
+      img = re.findall('img src="(.*?)"', e.description)[0]
+      ret.append( (e.title, img, datetime.datetime.now()))
+      print "%s: %s" % (e.title.split('-',1)[0], img)
+    except:
+      pass
+  return ret[:10]
+
+
 def loadEntries():
   return [ (e.title.encode('utf-8'), e.link, e.date)
         for e in feedparser.parse("comics.xml").entries ]
@@ -140,7 +152,9 @@ def loadEntries():
 def main():
   socket.setdefaulttimeout(5)
   old = loadEntries()
-  new = getNewComics()
+  new = []
+  new.extend(getFSPComics())
+  new.extend(getNewComics())
 
   links = [ x[1] for x in old ]
 
@@ -149,7 +163,7 @@ def main():
       old.insert(0,n)
 
   items = []
-  for title, link, date in old[:50]:
+  for title, link, date in old[:100]:
     items.append( RSS2.RSSItem( title = title,
                                 link = link,
                                 description = '<img src="%s">' % link,
