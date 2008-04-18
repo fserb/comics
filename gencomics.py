@@ -2,7 +2,8 @@
 """
 Generates comics.xml RSS feeds
 
-
+add:
+http://truckbearingkibble.com/comic
 """
 
 import re, urllib, thread, time, socket, datetime, sys, sha, os
@@ -15,9 +16,9 @@ Baselink = 'http://fserb.com.br/comics.xml'
 
 comics = [
   ( "Dilbert",
-    "http://www.dilbert.com",
-    '<IMG SRC=\"\/(comics\/dilbert\/archive\/images\/dilbert.*?)" ALT=\"Today\'s Comic\"',
-    "http://www.dilbert.com/%s" ),
+    "http://feeds.feedburner.com/DilbertDailyStrip",
+    '&lt;img src="(http://dilbert.com/dyn/str_strip/.*?)"',
+    "%s" ),
   ( "Pearls Before the Swine",
     "http://www.comics.com/comics/pearls/",
     '<IMG SRC="\/(comics\/pearls\/archive\/images\/pearls.*?)"',
