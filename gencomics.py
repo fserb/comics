@@ -4,6 +4,12 @@ Generates comics.xml RSS feeds
 
 add:
 http://truckbearingkibble.com/comic
+http://abstrusegoose.com/
+http://www.timesfreepress.com/news/rss/bennett/
+http://www.socialsignal.com/noise-to-signal
+
+remove:
+sinfest
 """
 
 import re, urllib, thread, time, socket, datetime, sys, sha, os
