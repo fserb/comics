@@ -4,7 +4,6 @@ Generates comics.xml RSS feeds
 
 add:
 http://truckbearingkibble.com/comic
-http://abstrusegoose.com/
 
 Remove:
 sinfest
@@ -91,6 +90,11 @@ comics = [
    'http://feeds.feedburner.com/RobCottinghamCartoons',
    'img src="(http://www.socialsignal.com/.*?)"',
    '%s'),
+  ('Abstruse Goose',
+   'http://abstrusegoose.com/',
+   'src="(http://abstrusegoose.com/strips/.*?)"',
+   '%s'),
+
     ]
 
 
