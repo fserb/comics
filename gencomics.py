@@ -8,7 +8,7 @@ http://abstrusegoose.com/
 http://www.timesfreepress.com/news/rss/bennett/
 http://www.socialsignal.com/noise-to-signal
 
-remove:
+Remove:
 sinfest
 """
 
@@ -85,6 +85,11 @@ comics = [
    'http://cectic.com/',
    '<img id="comic" .*?src="(.*?)"',
    'http://cectic.com/%s'),
+  ('Bennett Editorial Cartoons',
+   'http://www.timesfreepress.com/news/rss/bennett/',
+   'img src="(.*?)"',
+   '%s'),
+  
     ]
 
 
