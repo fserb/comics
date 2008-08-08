@@ -5,8 +5,6 @@ Generates comics.xml RSS feeds
 add:
 http://truckbearingkibble.com/comic
 http://abstrusegoose.com/
-http://www.timesfreepress.com/news/rss/bennett/
-http://www.socialsignal.com/noise-to-signal
 
 Remove:
 sinfest
@@ -89,7 +87,10 @@ comics = [
    'http://www.timesfreepress.com/news/rss/bennett/',
    'img src="(.*?)"',
    '%s'),
-  
+  ('Noise to Signal',
+   'http://feeds.feedburner.com/RobCottinghamCartoons',
+   'img src="(http://www.socialsignal.com/.*?)"',
+   '%s'),
     ]
 
 
