@@ -3,14 +3,19 @@
 Generates comics.xml RSS feed
 
 Dependencies:
-feedparser
-PyRSS2Gen
+- feedparser
+- PyRSS2Gen
 
-add:
-http://truckbearingkibble.com/comic
+Add comics:
 
-Remove:
-sinfest
+Remove comics:
+- sinfest
+
+TODO:
+- add support for ALT tags
+- include link for the original page
+- simplify RSS code
+- separate language comics
 """
 
 import PyRSS2Gen as RSS2
