@@ -1,6 +1,10 @@
 #!/usr/bin/env python2.5
 """
-Generates comics.xml RSS feeds
+Generates comics.xml RSS feed
+
+Dependencies:
+feedparser
+PyRSS2Gen
 
 add:
 http://truckbearingkibble.com/comic
@@ -9,96 +13,32 @@ Remove:
 sinfest
 """
 
-import re, urllib, thread, time, socket, datetime, sys, sha, os
-import feedparser
 import PyRSS2Gen as RSS2
+import feedparser
 
-#import fspcomics
+import datetime
+import os
+import re
+import socket
+import sys
+import thread
+import time
+import urllib
+
+from comics_list import comics
 
 Baselink = 'http://fserb.com.br/comics.xml'
 
-comics = [
-  ( "Dilbert",
-    "http://feeds.feedburner.com/DilbertDailyStrip",
-    '&lt;img src="(http://dilbert.com/dyn/str_strip/.*?)"',
-    "%s" ),
-  ( "Pearls Before the Swine",
-    "http://www.comics.com/comics/pearls/",
-    '<IMG SRC="\/(comics\/pearls\/archive\/images\/pearls.*?)"',
-    "http://www.comics.com/%s" ),
-  ( "Malvados",
-    "http://www.malvados.com.br/",
-    '<frame name="mainFrame" src="index(.*?)\.html">',
-    "http://www.malvados.com.br/tirinha%s.gif" ),
-  ( "BugBash",
-    "http://www.bugbash.net/",
-    '(http:\/\/www.bugbash.net\/strips\/bug-bash.*?gif)" ',
-    "%s" ),
-  ( "Piled Higher & Deeper",
-    "http://www.phdcomics.com/comics.php",
-    '<img src=(http:\/\/www.phdcomics.com\/comics\/archive\/phd.*?) ',
-    "%s" ),
-  ( "Laerte",
-    "http://p.php.uol.com.br/laerte/index.php",
-    'tiraNome="(.*?)"',
-    "http://www2.uol.com.br/laerte/tiras/%s" ),
-  ( "xkcd",
-    "http://xkcd.com/",
-    '<img src="(http:\/\/imgs\.xkcd\.com\/comics\/.*?)"',
-    "%s" ),
-  ( 'Wulffmorgenthaler',
-    'http://www.wulffmorgenthaler.com/',
-    'src="(striphandler.*?)"',
-    'http://www.wulffmorgenthaler.com/%s' ),
-  ( 'Indexed',
-    'http://indexed.blogspot.com/',
-    '<img style.*? src="(.*?)" .*?>',
-    '%s'),
-  ('The Perry Bible Fellowship',
-   'http://pbfcomics.com',
-   '<a href="\?cid=(.*?)"',
-   'http://pbfcomics.com/archive_b/%s'),
-  ('The Joy of Tech',
-   'http://www.joyoftech.com/joyoftech/index.html',
-   '<img src="(joyimages/.*?)" alt="The Joy of Tech comic"',
-   'http://www.joyoftech.com/joyoftech/%s'),
-  ('Pathetic Geek Stories',
-   'http://www.patheticgeekstories.com/',
-   '<img src="(/?archives/.*?/.*?)" ',
-   'http://www.patheticgeekstories.com/%s'),
-  ('Sinfest',
-   'http://www.sinfest.net/',
-   '<p align="center"><img src="(http://sinfest.net/comikaze/comics/.*?)" ',
-   '%s'),
-  ('Subnormality',
-   'http://www.viruscomix.com/rss.xml',
-   '<link>(http://www.viruscomix.com/.*?\.jpg)</link>',
-   '%s'),
-  ('See Mike Draw',
-   'http://seemikedraw.wordpress.com/feed/',
-   '<media:content url="(http://seemikedraw.files.wordpress.com.*?)"',
-   '%s'),
-  ('Cectic',
-   'http://cectic.com/',
-   '<img id="comic" .*?src="(.*?)"',
-   'http://cectic.com/%s'),
-  ('Bennett Editorial Cartoons',
-   'http://www.timesfreepress.com/news/rss/bennett/',
-   'img src="(.*?)"',
-   '%s'),
-  ('Noise to Signal',
-   'http://feeds.feedburner.com/RobCottinghamCartoons',
-   'img src="(http://www.socialsignal.com/.*?)"',
-   '%s'),
-  ('Abstruse Goose',
-   'http://abstrusegoose.com/',
-   'src="(http://abstrusegoose.com/strips/.*?)"',
-   '%s'),
-
-    ]
-
 
 def getURL(url):
+  """ Try to fetch a URL and fail silently.
+
+  Args:
+    url: url to be fetched
+
+  Returns:
+    URL content
+  """
   for _ in range(2):
     try:
       d = urllib.urlopen(url).read()
@@ -138,18 +78,24 @@ def getNewComics():
 
 
 def getFSPComics():
+  """ Special type for FSP
+
+  TODO: move to comics_list
+  """
   ret = []
   for e in feedparser.parse("http://leandrosiqueira.com/quadrinhos/rss/").entries:
     try:
       img = re.findall('img src="(.*?)"', e.description)[0]
       ret.append( (e.title, img, datetime.datetime.now()))
-      print "%s: %s" % (e.title.split('-',1)[0], img)
+      #print "%s: %s" % (e.title.split('-',1)[0], img)
     except:
       pass
   return ret[:10]
 
 
 def loadEntries():
+  """ Load old entries.from RSS
+  """
   return [ (e.title.encode('utf-8'), e.link, e.date)
         for e in feedparser.parse("comics.xml").entries ]
 
@@ -177,7 +123,7 @@ def main():
 
   rss = RSS2.RSS2(
     title = "Comics",
-    link = "http://fserb.com.br/comics.xml",
+    link = Baselink,
     description = "Comics feeds for the masses",
     lastBuildDate = datetime.datetime.now(),
     items = items)
