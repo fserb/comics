@@ -95,4 +95,9 @@ comics = [
    'src="(http://abstrusegoose.com/strips/.*?)"',
    '%s'),
 
+  ('Truck Bearing Kibble',
+   'http://truckbearingkibble.com',
+   '"(http://truckbearingkibble.com/images/comic/.*?\.jpg)"',
+   '%s'),
+
     ]
