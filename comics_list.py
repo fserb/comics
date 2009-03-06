@@ -6,12 +6,12 @@ comics = [
     "%s" ),
 
   ( "Pearls Before the Swine",
-    "http://www.comics.com/comics/pearls/",
-    '<IMG SRC="\/(comics\/pearls\/archive\/images\/pearls.*?)"',
-    "http://www.comics.com/%s" ),
+    "http://comics.com/pearls_before_swine/",
+    '"(http://assets.*?full.gif)"',
+    "%s" ),
 
   ( "Malvados",
-    "http://www.malvados.com.br/",
+    "http://malvados.com.br/",
     '<frame name="mainFrame" src="index(.*?)\.html">',
     "http://www.malvados.com.br/tirinha%s.gif" ),
 
@@ -66,9 +66,9 @@ comics = [
    '%s'),
 
   ('Subnormality',
-   'http://www.viruscomix.com/rss.xml',
-   '<link>(http://www.viruscomix.com/.*?\.jpg)</link>',
-   '%s'),
+   'http://www.viruscomix.com/subnormality.html',
+   '<img.*src="(.*?)"></span>',
+   'http://www.viruscomix.com/%s'),
 
   ('See Mike Draw',
    'http://seemikedraw.wordpress.com/feed/',
