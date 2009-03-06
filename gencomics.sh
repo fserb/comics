@@ -1,7 +1,10 @@
 #!/bin/sh
+#
+# For various ridiculous reasons, we can't run a cron job on the current machine.
+# This script is run on a screen instance
 
-export LD_LIBRARY_PATH="/home/fserb/run/lib:"
-export LD_RUN_PATH="/home/fserb/run/lib:"
-export PATH="${PATH}:/home/fserb/run/bin"
-export PYTHONPATH="/home/fserb/.python"
-exec ./gencomics.py
+while [ 1 ]; do
+  ./gencomics.py -
+  echo "done"
+  sleep 10800
+done
