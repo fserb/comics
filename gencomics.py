@@ -7,6 +7,18 @@ Dependencies:
 - PyRSS2Gen
 
 Add comics:
+- http://www.smbc-comics.com
+- http://www.dieselsweeties.com
+- http://www.explosm.net/comics
+- http://wondermark.com
+- http://www.medium-large.com/
+- http://www.daniellecorsetto.com/gws.html
+- http://www.partiallyclips.com
+http://overcompensating.com
+http://nobodyscores.loosenutstudio.com/
+http://www.questionablecontent.net
+http://www.chrisyates.net/reprographics/index.php
+Wagner & Beethoven
 
 Remove comics:
 - sinfest
@@ -16,6 +28,7 @@ TODO:
 - include link for the original page
 - simplify RSS code
 - separate language comics
+- update config file to YAML?
 """
 
 import PyRSS2Gen as RSS2
