@@ -46,9 +46,12 @@ def getNewComics():
     ans = ()
     try:
       page = getURL(url)
-      link = linkp % re.findall(regexp, page)[0]
+      if regexp:
+        link = linkp % re.findall(regexp, page)[0]
+      else:
+        link = ""
       if textexp:
-        text = re.findall(textexp, page)[0]
+        text = re.findall(textexp, page, re.S)[0]
         ans = (title, link, datetime.datetime.now(), text)
         print '%s: %s *' % (ans[0], ans[1])
       else:
@@ -115,7 +118,12 @@ def main():
       if len(n) == 3:
         desc = '<img src="%s">' % n[1]
       else:
-        desc = '<img src="%s"><p>%s' % (n[1], n[3])
+        if n[1]:
+          desc = '<img src="%s">' % n[1]
+        else:
+          desc = ''
+        desc += '<p>%s' % n[3]
+
       old.insert(0, (n[0], n[1], n[2], desc))
 
   items = []

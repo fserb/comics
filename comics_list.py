@@ -101,4 +101,12 @@ comics = [
    '"(http://truckbearingkibble.com/images/comic/.*?\.jpg)"',
    '%s'),
 
+  ('Wagner & Beethoven',
+   'http://www.apostos.com/wagnerebeethoven/atom.xml',
+   '',
+   '',
+   '<content.*?<!\[CDATA\[(.*?)\]\]>'),
+
+
+
     ]
