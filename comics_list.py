@@ -33,7 +33,8 @@ comics = [
   ( "xkcd",
     "http://xkcd.com/",
     '<img src="(http:\/\/imgs\.xkcd\.com\/comics\/.*?)"',
-    "%s" ),
+    "%s",
+    '<img src="http://imgs.xkcd.com/comics.*?" title="(.*?)"' ),
 
   ( 'Wulffmorgenthaler',
     'http://www.wulffmorgenthaler.com/',

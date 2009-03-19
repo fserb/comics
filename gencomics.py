@@ -2,33 +2,6 @@
 """
 Generates comics.xml RSS feed
 
-Dependencies:
-- feedparser
-- PyRSS2Gen
-
-Add comics:
-- http://www.smbc-comics.com
-- http://www.dieselsweeties.com
-- http://www.explosm.net/comics
-- http://wondermark.com
-- http://www.medium-large.com/
-- http://www.daniellecorsetto.com/gws.html
-- http://www.partiallyclips.com
-http://overcompensating.com
-http://nobodyscores.loosenutstudio.com/
-http://www.questionablecontent.net
-http://www.chrisyates.net/reprographics/index.php
-Wagner & Beethoven
-
-Remove comics:
-- sinfest
-
-TODO:
-- add support for ALT tags
-- include link for the original page
-- simplify RSS code
-- separate language comics
-- update config file to YAML?
 """
 
 import PyRSS2Gen as RSS2
@@ -69,13 +42,18 @@ def getURL(url):
 def getNewComics():
   ret = []
 
-  def getSingle(title, url, regexp, linkp):
+  def getSingle(title, url, regexp, linkp, textexp=None):
     ans = ()
     try:
       page = getURL(url)
       link = linkp % re.findall(regexp, page)[0]
-      ans = (title, link, datetime.datetime.now())
-      print '%s: %s' % (ans[0], ans[1])
+      if textexp:
+        text = re.findall(textexp, page)[0]
+        ans = (title, link, datetime.datetime.now(), text)
+        print '%s: %s *' % (ans[0], ans[1])
+      else:
+        ans = (title, link, datetime.datetime.now())
+        print '%s: %s' % (ans[0], ans[1])
     except:
       print "%s: error" % title
     finally:
@@ -90,7 +68,6 @@ def getNewComics():
     timelapse += 1
     if timelapse >= 60:
       break
-
 
   return [ x for x in ret if x ]
 
@@ -114,8 +91,14 @@ def getFSPComics():
 def loadEntries():
   """ Load old entries.from RSS
   """
-  return [ (e.title.encode('utf-8'), e.link, e.date)
-        for e in feedparser.parse("comics.xml").entries ]
+  ret = []
+  for e in feedparser.parse("comics.xml").entries:
+    o = (e.title.encode('utf-8'), 
+         e.link,
+         e.date,
+         e.description)
+    ret.append(o)
+  return ret 
 
 
 def main():
@@ -129,13 +112,17 @@ def main():
 
   for n in new:
     if not n[1] in links:
-      old.insert(0,n)
+      if len(n) == 3:
+        desc = '<img src="%s">' % n[1]
+      else:
+        desc = '<img src="%s"><p>%s' % (n[1], n[3])
+      old.insert(0, (n[0], n[1], n[2], desc))
 
   items = []
-  for title, link, date in old[:100]:
+  for title, link, date, description in old[:100]:
     items.append( RSS2.RSSItem( title = title,
                                 link = link,
-                                description = '<img src="%s">' % link,
+                                description = description,
                                 guid = RSS2.Guid(link),
                                 pubDate = date) )
 
