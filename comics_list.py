@@ -107,6 +107,9 @@ comics = [
    '',
    '<content.*?<!\[CDATA\[(.*?)\]\]>'),
 
-
+  ('Little Gamers',
+   'http://www.little-gamers.com/',
+   'img src="(http://www.little-gamers.com/comics/.*?)"',
+   '%s'),
 
     ]
