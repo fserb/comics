@@ -127,7 +127,7 @@ def main():
       old.insert(0, (n[0], n[1], n[2], desc))
 
   items = []
-  for title, link, date, description in old[:100]:
+  for title, link, date, description in old[:75]:
     items.append( RSS2.RSSItem( title = title,
                                 link = link,
                                 description = description,
