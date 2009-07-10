@@ -66,11 +66,6 @@ comics = [
    '<p align="center"><img src="(http://sinfest.net/comikaze/comics/.*?)" ',
    '%s'),
 
-  ('Subnormality',
-   'http://www.viruscomix.com/subnormality.html',
-   '<img.*src="(.*?)"></span>',
-   'http://www.viruscomix.com/%s'),
-
   ('See Mike Draw',
    'http://seemikedraw.wordpress.com/feed/',
    '<media:content url="(http://seemikedraw.files.wordpress.com.*?)"',
