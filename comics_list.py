@@ -107,4 +107,24 @@ comics = [
    'img src="(http://www.little-gamers.com/comics/.*?)"',
    '%s'),
 
+  ('Saturday Morning Breakfast Cereal',
+   'http://www.smbc-comics.com/',
+   'img src="(.*?/comics/.*?)"',
+   '%s'),
+
+  ('PartiallyClips',
+   'http://www.partiallyclips.com/',
+   'img src="(.*?storage.*?)"',
+   '%s'),
+
+  ('Pictures for sad children',
+   'http://picturesforsadchildren.com/',
+   'img src="(.*?comics.*?)"',
+   '%s'),
+
+  ('Bellen!',
+   'http://boxbrown.com/',
+   'img src="(.*?comics.*?)"',
+   '%s'),
+
     ]
