@@ -1,10 +1,5 @@
-#!/bin/sh
-#
-# For various ridiculous reasons, we can't run a cron job on the current machine.
-# This script is run on a screen instance
+#!/bin/bash
+# Run on cron
 
-while [ 1 ]; do
-  ./gencomics.py -
-  echo "done"
-  sleep 10800
-done
+./gencomics.py -
+rsync -vr --partial --progress comics.xml fserb.com.br:www/comics.xml
