@@ -109,7 +109,7 @@ comics = [
 
   ('Saturday Morning Breakfast Cereal',
    'http://www.smbc-comics.com/',
-   'img src="(.*?/comics/.*?)"',
+   "<img src='(http://.*?\d+\.gif)'>",
    '%s'),
 
   ('PartiallyClips',
