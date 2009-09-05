@@ -108,8 +108,8 @@ comics = [
    '%s' ),
 
   ( 'Saturday Morning Breakfast Cereal',
-   'http://www.smbc-comics.com/',
-   "<img src='(http://.*?\d+\.gif)'>",
+   'http://www.smbc-comics.com/rss.php',
+    '<img src="(.*?)">',
    '%s' ),
 
   ( 'PartiallyClips',
