@@ -81,7 +81,7 @@ def getFSPComics():
   TODO: move to comics_list
   """
   ret = []
-  for e in feedparser.parse("http://leandrosiqueira.com/quadrinhos/rss/").entries:
+  for e in feedparser.parse("http://www.luizirber.org/rss/fsp.xml").entries:
     try:
       img = re.findall('img src="(.*?)"', e.description)[0]
       ret.append( (e.title, img, datetime.datetime.now()))
