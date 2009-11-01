@@ -86,11 +86,6 @@ comics = [
    'img src="(http://www.socialsignal.com/.*?)"',
    '%s' ),
 
-  ( 'Abstruse Goose',
-   'http://abstrusegoose.com/',
-   'src="(http://abstrusegoose.com/strips/.*?)"',
-   '%s' ),
-
   ( 'Truck Bearing Kibble',
    'http://truckbearingkibble.com',
    '"(http://truckbearingkibble.com/images/comic/.*?\.jpg)"',
