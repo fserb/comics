@@ -127,9 +127,13 @@ comics = [
    '<img src="(.*?)"',
    '%s' ),
 
-  ( 'Rehabilitating Mr.Wiggles',
-    'http://www.mrwiggleslovesyou.com/',
-    'img src="(comics.*?)"',
-    'http://www.mrwiggleslovesyou.com/%s' ),
+  ('Savage Chickens',
+   'http://www.savagechickens.com/category/cartoons',
+   '<img src="(http://www.savagechickens.com/images/chicken.*?)" alt="Savage',
+   '%s' ),
 
+  ('Lefty Cartoons',
+   'http://www.leftycartoons.com/feed/',
+   '<p><img src="(.*?)"',
+   '%s' ),
     ]

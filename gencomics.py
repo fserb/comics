@@ -15,6 +15,7 @@ import sys
 import thread
 import time
 import urllib
+from collections import defaultdict
 
 from comics_list import comics
 
@@ -126,8 +127,16 @@ def main():
 
       old.insert(0, (n[0], n[1], n[2], desc))
 
+  firstocc = defaultdict(lambda: len(old))
+  for i, (title, _, _, _) in enumerate(old):
+    firstocc[title] = min(firstocc[title], i)
+
+  firstocc = set(firstocc.values())
+
   items = []
-  for title, link, date, description in old[:75]:
+  for i, (title, link, date, description) in enumerate(old):
+    if i > 75 and i not in firstocc:
+      continue
     items.append( RSS2.RSSItem( title = title,
                                 link = link,
                                 description = description,
