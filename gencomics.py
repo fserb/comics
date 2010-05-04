@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.5
+#!/usr/bin/env python
 """
 Generates comics.xml RSS feed
 
@@ -102,7 +102,7 @@ def loadEntries():
          e.date,
          e.description)
     ret.append(o)
-  return ret 
+  return ret
 
 
 def main():

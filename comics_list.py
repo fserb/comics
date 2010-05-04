@@ -7,7 +7,7 @@ comics = [
 
   ( "Pearls Before the Swine",
     "http://comics.com/pearls_before_swine/",
-    '"(http://assets.*?full.gif)"',
+    'img src="(http://.*?full.gif)"',
     "%s" ),
 
   ( "Malvados",
@@ -61,11 +61,6 @@ comics = [
     '<img src="(/?archives/.*?/.*?)" ',
     'http://www.patheticgeekstories.com/%s' ),
 
-  ( 'Sinfest',
-    'http://www.sinfest.net/',
-    '<p align="center"><img src="(http://sinfest.net/comikaze/comics/.*?)" ',
-    '%s' ),
-
   ( 'See Mike Draw',
     'http://seemikedraw.wordpress.com/feed/',
     '<media:content url="(http://seemikedraw.files.wordpress.com.*?)"',
@@ -81,21 +76,16 @@ comics = [
    'img .*? src="(.*?img/news/.*?)_[^_]*\.jpg\?.*?"',
    '%s.jpg' ),
 
-  ( 'Noise to Signal',
-   'http://feeds.feedburner.com/RobCottinghamCartoons',
-   'img src="(http://www.socialsignal.com/.*?)"',
-   '%s' ),
-
   ( 'Truck Bearing Kibble',
    'http://truckbearingkibble.com',
    '"(http://truckbearingkibble.com/images/comic/.*?\.jpg)"',
    '%s' ),
 
   ( 'Wagner & Beethoven',
-   'http://www.apostos.com/wagnerebeethoven/atom.xml',
+   'http://wagnerebeethoven.apostos.com/feed/',
    '',
    '',
-   '<content.*?<!\[CDATA\[(.*?)\]\]>' ),
+   '<content:encoded><!\[CDATA\[(.*?)\]\]></content:encoded>' ),
 
   ( 'Saturday Morning Breakfast Cereal',
    'http://www.smbc-comics.com/rss.php',
@@ -104,7 +94,7 @@ comics = [
 
   ( 'PartiallyClips',
    'http://www.partiallyclips.com/',
-   'img src="(.*?storage.*?)"',
+    '(http://partiallyclips.com/comics/.*?.jpg)',
    '%s' ),
 
   ( 'Pictures for sad children',
@@ -136,4 +126,11 @@ comics = [
    'http://www.leftycartoons.com/feed/',
    '<p><img src="(.*?)"',
    '%s' ),
+
+  ('En dosis diarias',
+   'http://www.dosisdiarias.com/',
+   'src="(http://.*?\.jpg)" alt',
+   '%s' ),
+
+
     ]
