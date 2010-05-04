@@ -132,5 +132,9 @@ comics = [
    'src="(http://.*?\.jpg)" alt',
    '%s' ),
 
+  ('Macanudo',
+   'http://autoliniers.blogspot.com/feeds/posts/default',
+   'SRC="(http://.*?JPG)"',
+   '%s' ),
 
     ]
