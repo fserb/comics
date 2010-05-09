@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 """
 Generates comics.xml RSS feed
 
@@ -81,15 +82,26 @@ def getFSPComics():
 
   TODO: move to comics_list
   """
+  cartoons = { 'adao': 'Adão Iturrasgarai',
+               'ange': 'Angeli',
+               'caco': 'Caco Galhardo',
+               'glau': 'Glauco',
+               'niqu': 'Níquel Náusea',
+               'pira': 'Piratas do Tietê' }
+  base = ('http://www1.folha.uol.com.br/fsp/images/%s' + 
+          time.strftime('%d%m%Y') + '.gif')
   ret = []
-  for e in feedparser.parse("http://www.luizirber.org/rss/fsp.xml").entries:
+  for autor, name in cartoons.iteritems():
     try:
-      img = re.findall('img src="(.*?)"', e.description)[0]
-      ret.append( (e.title, img, datetime.datetime.now()))
-      #print "%s: %s" % (e.title.split('-',1)[0], img)
+      path = base % autor
+      url = urllib.urlopen(path).url
+      if url != path:
+        continue
+      print '%s: %s' % (name, path)
+      ret.append((name, path, datetime.datetime.now()))
     except:
-      pass
-  return ret[:10]
+      raise
+  return ret
 
 
 def loadEntries():
