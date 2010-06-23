@@ -13,7 +13,7 @@ comics = [
   ( "Malvados",
     "http://malvados.com.br/",
     '<frame name="mainFrame" src="index(.*?)\.html">',
-    "http://www.malvados.com.br/tirinha%s.gif" ),
+    "http://www.malvados.com.br/tirinha%s.jpg" ),
 
   ( "BugBash",
     "http://www.bugbash.net/",
