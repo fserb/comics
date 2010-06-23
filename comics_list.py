@@ -102,11 +102,6 @@ comics = [
    'img src="(.*?comics.*?)"',
    '%s' ),
 
-  ( 'Bellen!',
-   'http://boxbrown.com/',
-   'img src="(.*?comics.*?)"',
-   '%s' ),
-
   ( 'New Yorker Cartoons',
    'http://feeds.feedburner.com/cartoonbank',
    '&lt;img src="(.*?)"',
@@ -137,4 +132,13 @@ comics = [
    'SRC="(http://.*?JPG)"',
    '%s' ),
 
+  ('Stuff No-one told me',
+   'http://stuffnoonetoldme.blogspot.com/feeds/posts/default',
+   r'&lt;img.*?src=[\'"]([^\'"]*?\.jpg)[\'"]',
+   '%s' ),
+  
+  ('Mau humor',
+   'http://www.oesquema.com.br/mauhumor/',
+   'href="(http://www.oesquema.com.br/mauhumor/wp-content/uploads/[^"]*?\.gif)"',
+   '%s' ),
     ]
