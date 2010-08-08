@@ -22,6 +22,9 @@ from comics_list import comics
 
 Baselink = 'http://fserb.com.br/comics.xml'
 
+class MyOpener(urllib.FancyURLopener):
+  version = 'Mozilla/5.0 (X11; U; Linux x86_64; en-US) AppleWebKit/534.3 (KHTML, like Gecko) Chrome/6.0.472.25 Safari/534.3'
+urllib._urlopener = MyOpener()
 
 def getURL(url):
   """ Try to fetch a URL and fail silently.
@@ -166,9 +169,5 @@ def main():
 
 
 if __name__ == "__main__":
-  import traprss
-  traprss.trytrap()
-  try:
-    main()
-  finally:
-    traprss.untrap("comics_debug.xml")
+  main()
+

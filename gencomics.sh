@@ -1,5 +1,5 @@
 #!/bin/bash
 # Run on cron
 
-./gencomics.py -
+./gencomics.py
 rsync -vr --partial --progress comics.xml fserb.com.br:www/comics.xml
