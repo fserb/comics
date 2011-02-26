@@ -33,9 +33,9 @@ comics = [
    '<img src="http://imgs.xkcd.com/comics.*?" title="(.*?)"'),
 
   ('Wulffmorgenthaler',
-   'http://www.wulffmorgenthaler.com/',
-   'src="(striphandler.*?)"',
-   'http://www.wulffmorgenthaler.com/%s'),
+   'http://feeds.feedburner.com/wulffmorgenthaler',
+   'src="(.*?\.jpg)"',
+   '%s'),
 
   ('Indexed',
    'http://thisisindexed.com/',
@@ -64,7 +64,7 @@ comics = [
 
   ('Bennett Editorial Cartoons',
    'http://www.timesfreepress.com/news/opinion/cartoons/',
-   'img .*? src="(.*?img/news/.*?)_[^_]*\.jpg\?.*?"',
+   'src="(http://media.timesfreepress.com/img/news/tease/.*?)_....\.jpg',
    '%s.jpg'),
 
   ('Truck Bearing Kibble',
@@ -79,8 +79,8 @@ comics = [
    '<content:encoded><!\[CDATA\[(.*?)\]\]></content:encoded>'),
 
   ('Saturday Morning Breakfast Cereal',
-   'http://www.smbc-comics.com/rss.php',
-   '<img src="(.*?)">',
+   'http://feeds.feedburner.com/smbc-comics/PvLb',
+   'src="(http://www.smbc-comics.com/.*?)"',
    '%s'),
 
   ('PartiallyClips',
@@ -93,11 +93,6 @@ comics = [
    'img src="(.*?comics.*?)"',
    '%s'),
 
-  ('New Yorker Cartoons',
-   'http://feeds.feedburner.com/cartoonbank',
-   'src="(.*?\.jpg)\?',
-   '%s'),
-
   ('Wondermark',
    'http://wondermark.com',
    '<img src="(.*?)"',
@@ -105,7 +100,7 @@ comics = [
 
   ('Savage Chickens',
    'http://www.savagechickens.com/category/cartoons',
-   '<img src="(http://www.savagechickens.com/images/chicken.*?)" alt="Savage',
+   'src="(http://www.savagechickens.com/.*?/chicken.*?)"',
    '%s'),
   
   ('Lefty Cartoons',
@@ -120,7 +115,7 @@ comics = [
 
   ('Macanudo',
    'http://autoliniers.blogspot.com/feeds/posts/default',
-   'SRC="(http://.*?JPG)"',
+   'SRC="(.*?)"',
    '%s'),
 
   ('Stuff No-one told me',
