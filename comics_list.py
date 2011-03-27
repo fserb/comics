@@ -1,10 +1,5 @@
 
 comics = [
-  ("Dilbert",
-   "http://feeds.feedburner.com/DilbertDailyStrip",
-   '&lt;img src="(http://dilbert.com/dyn/str_strip/.*?)"',
-   "%s"),
-
   ("Pearls Before the Swine",
    "http://comics.com/pearls_before_swine/",
    'img src="(http://.*?full.gif)"',
