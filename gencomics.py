@@ -23,7 +23,7 @@ from comics_list import comics
 Baselink = 'http://fserb.com.br/comics.xml'
 
 class MyOpener(urllib.FancyURLopener):
-  version = 'Mozilla/5.0 (X11; U; Linux x86_64; en-US) AppleWebKit/534.3 (KHTML, like Gecko) Chrome/6.0.472.25 Safari/534.3'
+  version = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.24 (KHTML, like Gecko) Chrome/11.0.696.48 Safari/534.24'
 urllib._urlopener = MyOpener()
 
 def getURL(url):
@@ -62,8 +62,12 @@ def getNewComics():
       else:
         ans = (title, link, datetime.datetime.now())
         print '%s: %s' % (ans[0], ans[1])
+    except IndexError:
+      print "%s: error - index" % title
     except:
       print "%s: error" % title
+      import traceback
+      traceback.print_exc()
     finally:
       ret.append(ans)
 

@@ -12,8 +12,8 @@ comics = [
 
 
   ("Piled Higher & Deeper",
-   "http://www.phdcomics.com/comics.php",
-   '<img src=(http:\/\/www.phdcomics.com\/comics\/archive\/phd.*?) ',
+   "http://www.phdcomics.com/gradfeed_justcomics.php",
+   'src=&quot;(.*?)&quot;',
    "%s"),
 
   ("Laerte",
@@ -30,11 +30,6 @@ comics = [
   ('Wulffmorgenthaler',
    'http://feeds.feedburner.com/wulffmorgenthaler',
    'src="(.*?\.jpg)"',
-   '%s'),
-
-  ('Indexed',
-   'http://thisisindexed.com/',
-   'src="(http://thisisindexed.com/wp-content/.*?\.jpg)"',
    '%s'),
 
   ('The Perry Bible Fellowship',
@@ -94,8 +89,8 @@ comics = [
    '%s'),
 
   ('Savage Chickens',
-   'http://www.savagechickens.com/category/cartoons',
-   'src="(http://www.savagechickens.com/.*?/chicken.*?)"',
+   'http://www.savagechickens.com/category/cartoons/feed',
+   'src="(.*?)"',
    '%s'),
   
   ('Lefty Cartoons',
@@ -132,5 +127,10 @@ comics = [
    "http://www.bugbash.net/",
    '(http:\/\/www.bugbash.net\/strips\/bug-bash.*?gif)" ',
    "%s"),
+
+  ("O Pintinho",
+   'http://www.opintinho.com.br/rss',
+   'src="(.*?)"',
+   '%s'),
 
   ]
