@@ -1,4 +1,3 @@
-
 comics = [
   ("Pearls Before the Swine",
    "http://comics.com/pearls_before_swine/",
@@ -133,4 +132,8 @@ comics = [
    'src="(.*?)"',
    '%s'),
 
+  ('Vida Besta',
+   'http://www.vidabesta.com/comicgallery.php',
+   'src="(vidabesta/imagens/tiras/[^"]*?\.gif)"',
+   'http://www.vidabesta.com/%s'),
   ]
