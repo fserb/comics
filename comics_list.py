@@ -1,4 +1,3 @@
-
 comics = [
   ("Dilbert",
    "http://feeds.feedburner.com/DilbertDailyStrip",
@@ -142,5 +141,10 @@ comics = [
    "http://www.bugbash.net/",
    '(http:\/\/www.bugbash.net\/strips\/bug-bash.*?gif)" ',
    "%s"),
+
+  ('Vida Besta',
+   'http://www.vidabesta.com/comicgallery.php',
+   'src="(vidabesta/imagens/tiras/[^"]*?\.gif)"',
+   'http://www.vidabesta.com/%s'),
 
   ]
