@@ -1,19 +1,19 @@
 Generate a comics RSS Feed
 
 Dependencies:
-- feedparser
-- PyRSS2Gen
 
-Doubts:
 
 New guys:
 http://meninanaopode.blogspot.com/
+Wagner e Beethoven
 
-Remove:
-
+Removed:
+http://seemikedraw.wordpress.com
+http://www.bugbash.net/
+http://leftycartoons.com/
+http://truckbearingkibble.com/
+http://www.dosisdiarias.com/
+http://patheticgeekstories.com/
+http://linhadotrem.com.br
 
 TODO:
-- include link for the original page
-- simplify RSS code
-- separate language comics
-- update config file to YAML?

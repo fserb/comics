@@ -9,7 +9,7 @@ require 'open-uri'
 require 'htmlentities'
 
 class Grabber
-  attr_accessor :content, :time, :page
+  attr_accessor :content, :time, :page, :page_title
 
   # Grabber is a @content stack, a @title and some downladed @page.
   def initialize
@@ -28,7 +28,7 @@ class Grabber
   end
 
   def get_content
-    @content * '\n'
+    @content * ''
   end
 
   def url(url)
@@ -48,11 +48,13 @@ class Grabber
     i = f.items[0]
     for m in [ :content_encoded, :description, :content, :summary ] do
       if i.respond_to? m and i.send(m) != nil then
-       content = (m == :summary ? i.send(m).content : i.send(m)).strip
-       if content.length > 0 then
-         @page = content
-         return
-       end
+        content = i.send(m)
+        content = content.content if content.respond_to? :content
+        content.strip!
+        if content.length > 0 then
+          @page = content
+          return
+        end
       end
     end
     raise "Not found"
@@ -89,16 +91,22 @@ class Grabber
 end
 
 @data = []
+@threads = []
 
 def comic(&name)
-  cr = Grabber.new
-  cr.instance_eval &name
-  @data.push cr
+  @threads << Thread.new {
+    cr = Grabber.new
+    begin
+      cr.instance_eval &name
+      @data.push cr
+      puts "Done: " + cr.get_title
+    rescue
+      puts "Exception for: " + cr.get_title
+    end
+  }
 end
 
-def feed(filename)
-  now = Time.now
-
+def load_old_file(filename)
   # Load old file
   if FileTest.exists? filename then
     open filename do |rss|
@@ -112,9 +120,11 @@ def feed(filename)
       end
     end
   end
+end
 
+def cleanup
   # Sort by time
-  @data.sort_by { |i| i.time ? i.time : now }
+  @data.sort_by { |i| i.time ? i.time : Time.now }
 
   # Remove duplicates
   tc = {}
@@ -131,7 +141,10 @@ def feed(filename)
 
   # Limit to 75 entries
   @data = @data.first 75
+end
 
+def save filename
+  now = Time.now
   puts "Saving: " + filename
   puts @data.length
 
@@ -149,10 +162,16 @@ def feed(filename)
         item.description = cr.get_content
       end
     end
-
   end
 
   open(filename, "w") do |f|
     f.write(rss)
   end
+end
+
+def feed(filename)
+  @threads.each { |t| t.join }
+  load_old_file filename
+  cleanup
+  save filename
 end

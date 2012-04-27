@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# encoding: utf-8
 
 require './comics'
 
@@ -19,6 +20,12 @@ comic do
   title "Pearls Before Swine"
   url "http://www.gocomics.com/pearlsbeforeswine"
   img re /<img alt="Pearls Before Swine" [^>]*src="(.*?)"/
+end
+
+comic do
+  title 'Non Sequitur'
+  url 'http://www.gocomics.com/nonsequitur'
+  img re /<img alt="Non Sequitur" [^>]*src="(.*?)"/
 end
 
 comic do
@@ -60,6 +67,60 @@ comic do
   img re /<a href="(.*?\/mundo.*?\.gif)"/
 end
 
+comic do
+  title 'Vida Besta'
+  url 'http://www.vidabesta.com/comicgallery.php'
+  re /src="(vidabesta\/imagens\/tiras\/[^\"]*?\.gif)"/
+  img 'http://www.vidabesta.com/%s'
+end
+
+comic do
+  title "O Pintinho"
+  feed 'http://opintinho.tumblr.com/rss'
+  post
+end
+
+comic do
+  title "Macanudo"
+  url "http://www.macanudo.com.ar/"
+  img re /<img src="(http:\/\/static.macanudo.com.ar\/macanudo_pics\/.*?)"/
+end
+
+comic do
+  title 'Savage Chickens'
+  url 'http://www.savagechickens.com/category/cartoons/feed'
+  re /(<img.*?>)/
+end
+
+comic do
+  title 'Manual do Minotauro'
+  feed 'http://manualdominotauro.blogspot.com/feeds/posts/default?alt=rss'
+  img re /href="(.*?)"/
+end
+
+comic do
+  title "Calvin and Hobbes"
+  feed 'http://calvinhobbesdaily.tumblr.com/rss'
+  post
+end
+
+comic do
+  title "Peanuts"
+  url 'http://www.gocomics.com/peanuts'
+  img re /<img alt="Peanuts" [^>]*src="(.*?)"/
+end
+
+comic do
+  title "Adão Iturrusgarai"
+  feed 'http://adao-tiras.rssblog.uol.com.br'
+  re /(<img.*?>)/
+end
+
+comic do
+  title 'Muriel'
+  feed 'http://murieltotal.rssblog.zip.net'
+  re /(<img.*?>)/
+end
 
 feed "newfeed.xml"
 
