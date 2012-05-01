@@ -7,9 +7,10 @@ Base utility to create a comics file
 require 'rss'
 require 'open-uri'
 require 'htmlentities'
+require 'digest/sha1'
 
 class Grabber
-  attr_accessor :content, :time, :page, :page_title
+  attr_accessor :content, :time, :page, :page_title, :guid
 
   # Grabber is a @content stack, a @title and some downladed @page.
   def initialize
@@ -17,10 +18,18 @@ class Grabber
     @content = []
     @page = ""
     @time = nil
+    @guid = nil
   end
 
   def to_s
     "< #{@title} : \n#{@content * '\n'} >"
+  end
+
+  def get_guid
+    if not @guid then
+      @guid = "//comic/#{Digest::SHA1.hexdigest (get_title + '/' + get_content)}"
+    end
+    @guid
   end
 
   def get_title
@@ -124,14 +133,15 @@ end
 
 def cleanup
   # Sort by time
-  @data.sort_by { |i| i.time ? i.time : Time.now }
+  now = Time.now
+  @data.sort_by! { |i| [i.time ? i.time : now, i.get_title] }
+  @data.reverse!
 
   # Remove duplicates
   tc = {}
   @data.each do |i|
-    k = i.get_title, i.get_content
-    tc[k] = [] if not tc.key? k
-    tc[k].push i
+    tc[i.get_guid] = [] if not tc.key? i.get_guid
+    tc[i.get_guid].push i
   end
   tc.each do |k, v|
     v[0..-2].each do |i|
@@ -140,7 +150,7 @@ def cleanup
   end
 
   # Limit to 75 entries
-  @data = @data.first 75
+  @data = @data.take 75
 end
 
 def save filename
@@ -158,8 +168,9 @@ def save filename
     @data.each do |cr|
       maker.items.new_item do |item|
         item.title = cr.get_title
-        item.date = if cr.time then cr.time else now end
+        item.date = if cr.time then cr.time else now.to_s end
         item.description = cr.get_content
+        item.dc_date = item.date
       end
     end
   end
