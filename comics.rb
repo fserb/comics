@@ -25,6 +25,10 @@ class Grabber
     "< #{@title} : \n#{@content * '\n'} >"
   end
 
+  def get_link
+    (get_content.scan /(https?:\/\/[^"'>]*)/)[0][0]
+  end
+
   def get_guid
     if not @guid then
       @guid = "//comic/#{Digest::SHA1.hexdigest (get_title + '/' + get_content)}"
@@ -41,7 +45,6 @@ class Grabber
   end
 
   def url(url)
-    puts "url: " + url
     open url do |f|
       @page = f.read
     end
@@ -170,7 +173,8 @@ def save filename
         item.title = cr.get_title
         item.date = if cr.time then cr.time else now.to_s end
         item.description = cr.get_content
-        item.dc_date = item.date
+        item.link = cr.get_link
+        puts item.title + ": " + item.link
       end
     end
   end
