@@ -9,6 +9,7 @@ require 'open-uri'
 require 'htmlentities'
 require 'digest/sha1'
 
+
 class Grabber
   attr_accessor :content, :time, :page, :page_title, :guid
 
