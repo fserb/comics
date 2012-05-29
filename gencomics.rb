@@ -3,6 +3,8 @@
 
 require './comics'
 
+feed "newfeed.xml"
+
 comic do
   title "xkcd"
   url "http://xkcd.com"
@@ -122,5 +124,4 @@ comic do
   re /(<img.*?>)/
 end
 
-feed "newfeed.xml"
 

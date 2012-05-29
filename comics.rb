@@ -103,6 +103,7 @@ class Grabber
 
 end
 
+@feedname = ''
 @data = []
 @threads = []
 
@@ -186,8 +187,15 @@ def save filename
 end
 
 def feed(filename)
-  @threads.each { |t| t.join }
-  load_old_file filename
-  cleanup
-  save filename
+  @feedname = filename
 end
+
+def run
+  @threads.each { |t| t.join }
+  puts "Saving..."
+  load_old_file @feedname
+  cleanup
+  save @feedname
+end
+
+at_exit { run }
