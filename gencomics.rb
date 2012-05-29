@@ -3,6 +3,7 @@
 
 require './comics'
 
+backfeed "all.xml"
 feed "newfeed.xml"
 
 comic do

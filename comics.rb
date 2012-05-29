@@ -104,6 +104,7 @@ class Grabber
 end
 
 @feedname = ''
+@backfeedname = ''
 @data = []
 @threads = []
 
@@ -153,15 +154,11 @@ def cleanup
       @data.delete i
     end
   end
-
-  # Limit to 75 entries
-  @data = @data.take 75
 end
 
 def save filename
   now = Time.now
-  puts "Saving: " + filename
-  puts @data.length
+  puts "Saving: #{filename} with #{@data.length} entries"
 
   rss = RSS::Maker.make "rss2.0" do |maker|
     maker.channel.author = 'Fernando Serboncini'
@@ -176,7 +173,6 @@ def save filename
         item.date = if cr.time then cr.time else now.to_s end
         item.description = cr.get_content
         item.link = cr.get_link
-        puts item.title + ": " + item.link
       end
     end
   end
@@ -190,11 +186,19 @@ def feed(filename)
   @feedname = filename
 end
 
+def backfeed filename
+  @backfeedname = filename
+end
+
 def run
   @threads.each { |t| t.join }
   puts "Saving..."
-  load_old_file @feedname
+  load_old_file @backfeedname
   cleanup
+  @data = @data.take 10000
+  save @backfeedname
+  # Limit to 75 entries
+  @data = @data.take 75
   save @feedname
 end
 
