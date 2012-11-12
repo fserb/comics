@@ -20,12 +20,6 @@ comic do
 end
 
 comic do
-  title "Pearls Before Swine"
-  url "http://www.gocomics.com/pearlsbeforeswine"
-  img re /<img alt="Pearls Before Swine" [^>]*src="(.*?)"/
-end
-
-comic do
   title 'Non Sequitur'
   url 'http://www.gocomics.com/nonsequitur'
   img re /<img alt="Non Sequitur" [^>]*src="(.*?)"/
@@ -36,13 +30,6 @@ comic do
   url "http://malvados.com.br/"
   re /"index(.*?)\.html"/
   img 'http://www.malvados.com.br/tirinha%s.jpg'
-end
-
-comic do
-  title "PHD Comics"
-  feed "http://www.phdcomics.com/gradfeed_justcomics.php"
-  # it could be the full post...
-  img re /src="(.*?)"/
 end
 
 comic do
@@ -123,6 +110,18 @@ comic do
   title 'Muriel'
   feed 'http://murieltotal.rssblog.zip.net'
   re /(<img.*?>)/
+end
+
+comic do
+  title 'Incidental Commics'
+  feed 'http://www.incidentalcomics.com/feeds/posts/default'
+  post
+end
+
+comic do
+  title "You're all just jealous of my jetpack"
+  feed "http://myjetpack.tumblr.com/rss"
+  post
 end
 
 
