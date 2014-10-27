@@ -57,7 +57,7 @@ class Grabber
 
   def feed(u)
     url u
-    f = RSS::Parser.parse @page
+    f = RSS::Parser.parse @page, false
     i = f.items[0]
     for m in [ :content_encoded, :description, :content, :summary ] do
       if i.respond_to? m and i.send(m) != nil then
@@ -117,6 +117,7 @@ def comic(&name)
       puts "Done: " + cr.get_title
     rescue
       puts "Exception for: " + cr.get_title
+      raise
     end
   }
 end
