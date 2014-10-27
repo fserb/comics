@@ -52,12 +52,6 @@ comic do
 end
 
 comic do
-  title 'Mau humor'
-  feed 'http://www.oesquema.com.br/mauhumor/feed'
-  img re /<a href="(.*?\/mundo.*?\.gif)"/
-end
-
-comic do
   title 'Vida Besta'
   url 'http://www.vidabesta.com/comicgallery.php'
   re /src="(vidabesta\/imagens\/tiras\/[^\"]*?\.gif)"/
