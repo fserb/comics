@@ -118,4 +118,20 @@ comic do
   post
 end
 
+comic do
+  title "Moonbeard"
+  feed "http://moonbeard.com/feed/atom/"
+  img re /<img src="(.*?)"/
+end
 
+comic do
+  title "Safely Endangered"
+  feed "http://www.safelyendangered.com/feed/"
+  img re /<img.*?src="(.*?)" class="attachment-full wp-post-image"/
+end
+
+comic do
+  title "Sarah's Scribbles"
+  url "http://sarahcandersen.com/rss"
+  post
+end
