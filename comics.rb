@@ -8,7 +8,7 @@ require 'rss'
 require 'open-uri'
 require 'htmlentities'
 require 'digest/sha1'
-
+require 'thread'
 
 class Grabber
   attr_accessor :content, :time, :page, :page_title, :guid
@@ -108,16 +108,22 @@ end
 @data = []
 @threads = []
 
+@putsemaphore = Mutex.new
+
 def comic(&name)
   @threads << Thread.new {
     cr = Grabber.new
     begin
       cr.instance_eval &name
       @data.push cr
-      puts "Done: " + cr.get_title
+      @putsemaphore.synchronize {
+        puts "Done: " + cr.get_title
+      }
     rescue
-      puts "Exception for: " + cr.get_title
-      raise
+      @putsemaphore.synchronize {
+        puts "Exception for: " + cr.get_title
+        raise
+      }
     end
   }
 end
