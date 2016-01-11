@@ -9,8 +9,8 @@ backmail "mail.xml"
 
 comic do
   title "Sharksplode"
-  feed "http://sharksplode.com/feed/"
-  post
+  url "http://sharksplode.com/"
+  img re /src="http:(\/\/sharksplode.com\/wp-content\/uploads\/.*?)"/
 end
 
 comic do
@@ -22,7 +22,7 @@ end
 comic do
   title "Amazing Super Powers"
   feed "http://feeds.feedburner.com/amazingsuperpowers"
-  re /(<img.*?>)/
+  img re /(<img.*?>)/
 end
 
 comic do
