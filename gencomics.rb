@@ -10,7 +10,7 @@ backmail "mail.xml"
 comic do
   title "Saturday Morning Breakfast Cereal"
   feed "http://www.smbc-comics.com/rss.php"
-  img re /src="(http:\/\/www.smbc-comics.com/comics\/.*?)"/
+  img re /src="(http:\/\/www.smbc-comics.com\/comics\/.*?)"/
 end
 
 comic do
