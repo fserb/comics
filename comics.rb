@@ -253,7 +253,7 @@ def run_mail
   cleanup_mail
   save @backmail
 
-  if not newdata:
+  if newdata.size == 0:
     return
 
   b = ""

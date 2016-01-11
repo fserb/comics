@@ -19,8 +19,6 @@ comic do
   img re /src="(http:\/\/media-cdn.timesfreepress.com\/img\/photos\/.*\.jpg?)"/
 end
 
-return
-
 comic do
   title "xkcd"
   url "http://xkcd.com"
