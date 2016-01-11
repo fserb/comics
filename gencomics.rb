@@ -8,6 +8,12 @@ feed "newfeed.xml"
 backmail "mail.xml"
 
 comic do
+  title "Saturday Morning Breakfast Cereal"
+  feed "http://www.smbc-comics.com/rss.php"
+  img re /src="(http:\/\/www.smbc-comics.com/comics\/.*?)"/
+end
+
+comic do
   title 'Bennett Editorial Cartoons'
   url 'http://www.timesfreepress.com/news/opinion/cartoons/'
   img re /src="(http:\/\/media-cdn.timesfreepress.com\/img\/photos\/.*\.jpg?)"/
@@ -20,12 +26,6 @@ comic do
   url "http://xkcd.com"
   img re /<img src="(\/\/imgs\.xkcd\.com\/comics\/.*?)"/
   comment re /<img src="\/\/imgs.xkcd.com\/comics.*?" title="(.*?)"/
-end
-
-comic do
-  title "Saturday Morning Breakfast Cereal"
-  feed "http://feeds.feedburner.com/smbc-comics/PvLb"
-  img re /src="(http:\/\/www.smbc-comics.com\/.*?)"/
 end
 
 comic do
@@ -130,10 +130,4 @@ comic do
   title "Safely Endangered"
   feed "http://www.safelyendangered.com/feed/"
   img re /<img.*?src="(.*?)" class="attachment-full wp-post-image"/
-end
-
-comic do
-  title "Sarah's Scribbles"
-  url "http://sarahcandersen.com/rss"
-  post
 end

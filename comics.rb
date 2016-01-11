@@ -253,6 +253,9 @@ def run_mail
   cleanup_mail
   save @backmail
 
+  if not newdata:
+    return
+
   b = ""
   newdata.each do |c|
     b += "<h2><a href='" + c.get_link + "'>" + c.get_title + "</a></h2>"
@@ -271,7 +274,7 @@ def run_mail
   end
 
   mail.delivery_method :sendmail
-  mail.delivery
+  mail.deliver
 end
 
 def run_rss
