@@ -261,14 +261,17 @@ def run_mail
   end
 
   mail = Mail.new do
-    from "fserb@fserb.com"
-    to "fserb@fserb.com"
+    from "fernando.serboncini@gmail.com"
+    to "fernando.serboncini@gmail.com"
     subject "Comics"
-    body b
+    html_part do
+      content_type 'text/html; charset=UTF-8'
+      body b
+    end
   end
 
   mail.delivery_method :sendmail
-  mail.delivery!
+  mail.delivery
 end
 
 def run_rss
