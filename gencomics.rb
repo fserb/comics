@@ -5,12 +5,21 @@ require './comics'
 
 backfeed "all.xml"
 feed "newfeed.xml"
+backmail "mail.xml"
+
+comic do
+  title 'Bennett Editorial Cartoons'
+  url 'http://www.timesfreepress.com/news/opinion/cartoons/'
+  img re /src="(http:\/\/media-cdn.timesfreepress.com\/img\/photos\/.*\.jpg?)"/
+end
+
+return
 
 comic do
   title "xkcd"
   url "http://xkcd.com"
-  img re /<img src="(http:\/\/imgs\.xkcd\.com\/comics\/.*?)"/
-  comment re /<img src="http:\/\/imgs.xkcd.com\/comics.*?" title="(.*?)"/
+  img re /<img src="(\/\/imgs\.xkcd\.com\/comics\/.*?)"/
+  comment re /<img src="\/\/imgs.xkcd.com\/comics.*?" title="(.*?)"/
 end
 
 comic do
@@ -45,13 +54,6 @@ comic do
 end
 
 comic do
-  title 'Bennett Editorial Cartoons'
-  url 'http://www.timesfreepress.com/news/opinion/cartoons/'
-  re /src=.(http:\/\/media.timesfreepress.com\/img\/news\/tease\/.*?)_....\.jpg/
-  img '%s.jpg'
-end
-
-comic do
   title 'Vida Besta'
   url 'http://www.vidabesta.com/comicgallery.php'
   re /src="(vidabesta\/imagens\/tiras\/[^\"]*?\.gif)"/
@@ -64,11 +66,11 @@ comic do
   post
 end
 
-comic do
-  title "Macanudo"
-  url "http://www.macanudo.com.ar/"
-  img re /<img src="(http:\/\/static.macanudo.com.ar\/macanudo_pics\/.*?)"/
-end
+# comic do
+#   title "Macanudo"
+#   url "http://www.macanudo.com.ar/"
+#   img re /<img src="(http:\/\/static.macanudo.com.ar\/macanudo_pics\/.*?)"/
+# end
 
 comic do
   title 'Savage Chickens'

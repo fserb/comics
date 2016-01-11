@@ -9,6 +9,7 @@ require 'open-uri'
 require 'htmlentities'
 require 'digest/sha1'
 require 'thread'
+require 'mail'
 
 class Grabber
   attr_accessor :content, :time, :page, :page_title, :guid
@@ -27,7 +28,7 @@ class Grabber
   end
 
   def get_link
-    (get_content.scan /(https?:\/\/[^"'>]*)/)[0][0]
+    (get_content.scan /(\/\/[^"'>]*)/)[0][0]
   end
 
   def get_guid
@@ -105,6 +106,7 @@ end
 
 @feedname = ''
 @backfeedname = ''
+@backmail = ''
 @data = []
 @threads = []
 
@@ -130,18 +132,21 @@ end
 
 def load_old_file(filename)
   # Load old file
+  out = []
   if FileTest.exists? filename then
     open filename do |rss|
       feed = RSS::Parser.parse rss
+      return out if not feed
       feed.items.each do |item|
         cr = Grabber.new
         cr.title item.title
         cr.content.push item.description
         cr.time = item.date
-        @data.push cr
+        out.push cr
       end
     end
   end
+  return out
 end
 
 def cleanup
@@ -155,6 +160,44 @@ def cleanup
   @data.each do |i|
     tc[i.get_guid] = [] if not tc.key? i.get_guid
     tc[i.get_guid].push i
+  end
+  tc.each do |k, v|
+    v[0..-2].each do |i|
+      @data.delete i
+    end
+  end
+end
+
+def compute_delta olddata
+  now = Time.now
+  @data.sort_by! { |i| [i.time ? i.time : now, i.get_title] }
+  @data.reverse!
+
+  tc = {}
+  olddata.each do |i|
+    tc[i.get_guid] = true
+  end
+
+  out = []
+  @data.each do |i|
+    if not tc.key? i.get_guid then
+      out.push i
+    end
+  end
+  return out
+end
+
+def cleanup_mail
+  # Sort by time
+  now = Time.now
+  @data.sort_by! { |i| [i.time ? i.time : now, i.get_title] }
+  @data.reverse!
+
+  # Remove duplicates
+  tc = {}
+  @data.each do |i|
+    tc[i.get_title] = [] if not tc.key? i.get_title
+    tc[i.get_title].push i
   end
   tc.each do |k, v|
     v[0..-2].each do |i|
@@ -197,16 +240,59 @@ def backfeed filename
   @backfeedname = filename
 end
 
-def run
+def backmail filename
+  @backmail = filename
+end
+
+def run_mail
+  @threads.each { |t| t.join }
+  newdata = @data.clone
+  current = load_old_file @backmail
+  newdata = compute_delta current
+  @data.push(*current)
+  cleanup_mail
+  save @backmail
+
+  b = ""
+  newdata.each do |c|
+    b += "<h2><a href='" + c.get_link + "'>" + c.get_title + "</a></h2>"
+    b += c.get_content
+    b += "\n\n"
+  end
+
+  mail = Mail.new do
+    from "fserb@fserb.com"
+    to "fserb@fserb.com"
+    subject "Comics"
+    body b
+  end
+
+  mail.delivery_method :sendmail
+  mail.delivery!
+end
+
+def run_rss
   @threads.each { |t| t.join }
   puts "Saving..."
-  load_old_file @backfeedname
+  d = load_old_file @backfeedname
+  @data.push(*d)
   cleanup
   @data = @data.take 10000
   save @backfeedname
   # Limit to 75 entries
   @data = @data.take 75
   save @feedname
+end
+
+def run
+  ARGV.each do |a|
+    case a
+    when "mail"
+      run_mail
+    when "rss"
+      run_rss
+    end
+  end
 end
 
 at_exit { run }
