@@ -64,12 +64,6 @@ comic do
   post
 end
 
-# comic do
-#   title "Macanudo"
-#   url "http://www.macanudo.com.ar/"
-#   img re /<img src="(http:\/\/static.macanudo.com.ar\/macanudo_pics\/.*?)"/
-# end
-
 comic do
   title 'Savage Chickens'
   url 'http://www.savagechickens.com/category/cartoons/feed'

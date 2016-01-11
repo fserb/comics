@@ -33,7 +33,8 @@ class Grabber
 
   def get_guid
     if not @guid then
-      @guid = "//comic/#{Digest::SHA1.hexdigest (get_title + '/' + get_content)}"
+    name = (get_link.scan /\/\/.*?\/(.*)$/)[0][0]
+      @guid = "//comic/#{Digest::SHA1.hexdigest (get_title + '/' + name)}"
     end
     @guid
   end
