@@ -253,8 +253,7 @@ def run_mail
   cleanup_mail
   save @backmail
 
-  if newdata.size == 0:
-    return
+  return if newdata.size == 0
 
   b = ""
   newdata.each do |c|
