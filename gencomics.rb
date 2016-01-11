@@ -8,6 +8,36 @@ feed "newfeed.xml"
 backmail "mail.xml"
 
 comic do
+  title "Sharksplode"
+  feed "http://sharksplode.com/feed/"
+  post
+end
+
+comic do
+  title "My Extra Life"
+  feed "http://www.myextralife.com/feed/"
+  post
+end
+
+comic do
+  title "Amazing Super Powers"
+  feed "http://feeds.feedburner.com/amazingsuperpowers"
+  re /(<img.*?>)/
+end
+
+comic do
+  title "Abominable"
+  feed "http://abominable.cc/rss"
+  post
+end
+
+comic do
+  title "Poorly Drawn Lines"
+  feed "http://feeds.feedburner.com/PoorlyDrawnLines"
+  post
+end
+
+comic do
   title "Saturday Morning Breakfast Cereal"
   feed "http://www.smbc-comics.com/rss.php"
   img re /src="(http:\/\/www.smbc-comics.com\/comics\/.*?)"/

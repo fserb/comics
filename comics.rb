@@ -125,7 +125,6 @@ def comic(&name)
     rescue
       @putsemaphore.synchronize {
         puts "Exception for: " + cr.get_title
-        raise
       }
     end
   }
