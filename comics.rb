@@ -201,7 +201,7 @@ def cleanup_mail
     tc[i.get_title].push i
   end
   tc.each do |k, v|
-    v[0..-2].each do |i|
+    v[1..-1].each do |i|
       @data.delete i
     end
   end
